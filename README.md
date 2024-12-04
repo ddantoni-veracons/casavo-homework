@@ -1,40 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# React Autocomplete Component
 
-## Getting Started
+Un componente autocomplete in React + TypeScript che permette di cercare città con 
+un menu a tendina, basato su input dell'utente.
 
-First, run the development server:
+---
+
+# Descrizione del Progetto
+
+Questo progetto è un componente React sviluppato con **Next.js** e **TypeScript** che offre un'autocomplete per la ricerca di città. Mostra un elenco di risultati filtrati da un'API remota e consente all'utente di selezionare una città. Il componente invia l'UUID della città selezionata al componente padre.
+
+---
+
+# Caratteristiche Principali
+
+- **Ricerca dinamica**: Mostra i risultati corrispondenti mentre l'utente digita almeno 2 caratteri.
+
+- **Selezione città**: Cliccando su una città, il valore viene riempito nell'input e l'UUID viene passato al genitore.
+
+- **Dropdown interattivo**: Si chiude automaticamente cliccando all'esterno del componente.
+
+- **Stile semplice**: Usato CSS vanilla.
+
+- **React e Hooks**: Componente costruito solo con funzioni e Hook.
+
+- **Gestione tipizzazione**: Dati e componenti tipizzati con TypeScript.
+
+---
+
+## Requisiti del Progetto
+
+- Node.js v20 o superiore.
+- NPM.
+- **Next.js** come framework.
+
+---
+
+## Installazione
+
+### 1. Clona il Repository
+git clone <repository-url>
+cd react-autocomplete
+
+### 2. Installa dipendenze
+npm install
+
+### 3. Avvia il Progetto
+npm run dev
+
+---
+
+## Struttura del progetto
+```bash
+react-autocomplete/
+├── api/                    
+│   ├── fetchCities.ts      # Chiamata principale per prendere le città
+├── components/
+│   ├── AutoComplete.tsx    # Componente principale autocomplete
+├── module/
+│   ├── city.interface.ts   # Interfaccia città
+├── pages/
+│   ├── index.tsx           # Pagina iniziale che utilizza AutoComplete
+│   ├── _app.tsx            # Configurazione globale
+├── styles/
+│   ├── global.css          # Stile globale del progetto
+├── public/                 # File statici
+├── package.json            # Dipendenze e script
+├── tsconfig.json           # Configurazione TypeScript
+└── README.md               # Documentazione del progetto
+```
+---
+
+## Come Utilizzare il Componente
+### 1. Props
+- **onSelectCity: Una funzione che riceve l'UUID della città selezionata.**
+
+### 2. Esempio:
+<AutoComplete onSelectCity={(cityUUID) => console.log(cityUUID)} />
+
+---
+
+## API Endpoint
+### 1. L'app utilizza un'API remota per ottenere la lista delle città:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+GET /v1/cities # Restituisce tutte le città.
+GET /v1/cities?search=<value> # Filtra i risultati in base al nome o al paese.
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Tecnologie Utilizzate
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+### 1. Next.js: Framework React.
+### 2. TypeScript: Tipizzazione statica.
+### 3. CSS: Stile semplice senza librerie esterne.
+### 4. Fetch API: Per chiamare l'API remota.
