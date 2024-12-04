@@ -69,6 +69,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelectCity }) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search for a city..."
+            ref={inputRef}
             style={{
                 width: '100%',
                 padding: '8px',
