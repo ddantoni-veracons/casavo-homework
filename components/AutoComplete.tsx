@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { City } from '@/module/city.interface';
 import React, { useEffect, useState } from 'react';
 
@@ -5,11 +6,10 @@ interface AutoCompleteProps {
   onSelectCity: (cityUUID: string) => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelectCity }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cities, setCities] = useState<City[]>([]);
+  const [filteredCities, setFilteredCities] = useState<City[]>([]);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -26,19 +26,64 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelectCity }) => {
     fetchCities();
   }, []);
 
+  useEffect(() => {
+    if (searchTerm.length >= 2) {
+      const filtered = cities.filter(
+        (city) =>
+          city.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          city.country.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredCities(filtered);
+    } else {
+      setFilteredCities([]);
+    }
+  }, [searchTerm, cities]);
+  
   return (
     <div style={{ position: 'relative', width: '300px' }}>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search for a city..."
-        style={{
-          width: '100%',
-          padding: '8px',
-          boxSizing: 'border-box',
-        }}
-      />
+        <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search for a city..."
+            style={{
+                width: '100%',
+                padding: '8px',
+                boxSizing: 'border-box',
+            }}
+        />
+        {filteredCities.length > 0 && (
+            <ul
+                style={{
+                position: 'absolute',
+                top: '100%',
+                left: 0,
+                width: '100%',
+                backgroundColor: '#fff',
+                border: '1px solid #ccc',
+                listStyle: 'none',
+                margin: 0,
+                padding: 0,
+                zIndex: 1000,
+                maxHeight: '200px',
+                overflowY: 'auto',
+                }}
+            >
+                {filteredCities.map((city) => (
+                <li
+                    key={city.uuid}
+                    style={{
+                    padding: '8px',
+                    cursor: 'pointer',
+                    }}
+                >
+                    <span>
+                    <strong>{city.name}</strong>, {city.country}
+                    </span>
+                </li>
+                ))}
+            </ul>
+        )}
     </div>
   );
 };
