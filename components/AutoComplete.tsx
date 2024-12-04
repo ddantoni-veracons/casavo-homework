@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { fetchCities } from '@/api/fetchCities';
 import { City } from '@/module/city.interface';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -14,18 +15,15 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelectCity }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    const fetchCities = async () => {
+    const loadCities = async () => {
       try {
-        const response = await fetch(
-          'https://etherqmshqkpehcowxqh.supabase.co/functions/v1/cities'
-        );
-        const data: City[] = await response.json();
+        const data = await fetchCities();
         setCities(data);
       } catch (error) {
-        console.error('Error fetching cities:', error);
+        console.error('Failed to load cities:', error);
       }
     };
-    fetchCities();
+    loadCities();
   }, []);
 
   useEffect(() => {
