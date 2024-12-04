@@ -49,9 +49,12 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelectCity }) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
-      }
+        if (
+          inputRef.current &&
+          !inputRef.current.contains(event.target as Node)
+        ) {
+          setIsDropdownOpen(false);
+        }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
