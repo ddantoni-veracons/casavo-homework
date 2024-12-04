@@ -34,8 +34,10 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelectCity }) => {
           city.country.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredCities(filtered);
+      setIsDropdownOpen(filtered.length > 0);
     } else {
       setFilteredCities([]);
+      setIsDropdownOpen(false);
     }
   }, [searchTerm, cities]);
 
@@ -70,38 +72,39 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelectCity }) => {
                 boxSizing: 'border-box',
             }}
         />
-        {filteredCities.length > 0 && (
-            <ul
-                style={{
-                position: 'absolute',
-                top: '100%',
-                left: 0,
-                width: '100%',
-                backgroundColor: '#fff',
-                border: '1px solid #ccc',
-                listStyle: 'none',
-                margin: 0,
-                padding: 0,
-                zIndex: 1000,
-                maxHeight: '200px',
-                overflowY: 'auto',
-                }}
-            >
-                {filteredCities.map((city) => (
+        {isDropdownOpen && (
+        <ul
+            style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            width: '100%',
+            backgroundColor: '#fff',
+            border: '1px solid #ccc',
+            listStyle: 'none',
+            margin: 0,
+            padding: 0,
+            zIndex: 1000,
+            maxHeight: '200px',
+            overflowY: 'auto',
+            }}
+        >
+            {filteredCities.map((city) => (
                 <li
                     key={city.uuid}
                     onClick={() => handleSelectCity(city)}
                     style={{
-                        padding: '8px',
-                        cursor: 'pointer',
+                    padding: '8px',
+                    cursor: 'pointer',
+                    backgroundColor: searchTerm === city.name ? '#e6e6e6' : '#fff',
                     }}
                 >
                     <span>
                     <strong>{city.name}</strong>, {city.country}
                     </span>
                 </li>
-                ))}
-            </ul>
+            ))}
+        </ul>
         )}
     </div>
   );
