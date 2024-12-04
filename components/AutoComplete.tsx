@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { City } from '@/module/city.interface';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface AutoCompleteProps {
   onSelectCity: (cityUUID: string) => void;
@@ -11,6 +11,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelectCity }) => {
   const [cities, setCities] = useState<City[]>([]);
   const [filteredCities, setFilteredCities] = useState<City[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -45,6 +46,18 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelectCity }) => {
     onSelectCity(city.uuid);
     setIsDropdownOpen(false);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   
   return (
     <div style={{ position: 'relative', width: '300px' }}>
