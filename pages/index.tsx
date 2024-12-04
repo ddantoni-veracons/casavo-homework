@@ -1,6 +1,11 @@
+import AutoComplete from "@/components/AutoComplete";
 import Head from "next/head";
 
 export default function Home() {
+  const handleCitySelect = (cityUUID: string) => {
+    console.log('Selected city UUID:', cityUUID);
+  };
+
   return (
     <>
       <Head>
@@ -9,9 +14,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>
-        SPL HERE
-      </h1>
+      <div style={{padding: '20px'}}>
+        <h1>City Search</h1>
+        <AutoComplete onSelectCity={handleCitySelect} />
+      </div>
     </>
   );
 }
