@@ -38,7 +38,7 @@ Questo progetto è un componente React sviluppato con **Next.js** e **TypeScript
 ## Installazione
 
 ### 1. Clona il Repository
-git clone [<repository-url>](https://github.com/ddantoni-veracons/casavo-homework.git)
+git clone https://github.com/ddantoni-veracons/casavo-homework.git
 
 ### 2. Installa dipendenze
 npm install
