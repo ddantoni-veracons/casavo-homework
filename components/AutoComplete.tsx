@@ -10,6 +10,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelectCity }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [cities, setCities] = useState<City[]>([]);
   const [filteredCities, setFilteredCities] = useState<City[]>([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -38,6 +39,12 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelectCity }) => {
       setFilteredCities([]);
     }
   }, [searchTerm, cities]);
+
+  const handleSelectCity = (city: City) => {
+    setSearchTerm(city.name);
+    onSelectCity(city.uuid);
+    setIsDropdownOpen(false);
+  };
   
   return (
     <div style={{ position: 'relative', width: '300px' }}>
@@ -72,9 +79,10 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelectCity }) => {
                 {filteredCities.map((city) => (
                 <li
                     key={city.uuid}
+                    onClick={() => handleSelectCity(city)}
                     style={{
-                    padding: '8px',
-                    cursor: 'pointer',
+                        padding: '8px',
+                        cursor: 'pointer',
                     }}
                 >
                     <span>
